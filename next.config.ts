@@ -1,6 +1,19 @@
 import type { NextConfig } from "next";
 
+const securityHeaders = [
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  // The helper takes evidence photos with the phone camera, so camera stays allowed for this site.
+  { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=()" },
+];
+
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  async headers() {
+    return [{ source: "/(.*)", headers: securityHeaders }];
+  },
   experimental: {
     /**
      * Keep prefetched dynamic segments in the client cache. Every page here is

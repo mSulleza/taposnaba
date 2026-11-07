@@ -10,7 +10,7 @@ import {
   Users,
   ListChecks,
 } from "lucide-react";
-import { sessionT } from "@/lib/auth";
+import { adminT } from "@/lib/auth";
 import { ensureInstancesAroundToday, getDashboardCounts, getInstancesInRange, getOverdueInstances } from "@/lib/queries";
 import { formatDate, todayISO } from "@/lib/dates";
 import { peso } from "@/lib/money";
@@ -97,7 +97,7 @@ function Section({
 }
 
 export default async function AdminDashboardPage() {
-  const { locale, t } = await sessionT();
+  const { locale, t } = await adminT();
   await ensureInstancesAroundToday();
   const today = todayISO();
   const [counts, todayList, overdueList] = await Promise.all([

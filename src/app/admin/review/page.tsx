@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { sessionT } from "@/lib/auth";
+import { adminT } from "@/lib/auth";
 import { collectPaths, getRecentlyReviewed, getReviewQueue } from "@/lib/queries";
 import { signPaths } from "@/lib/storage";
 import { pickLang } from "@/lib/i18n";
@@ -17,7 +17,7 @@ export const metadata: Metadata = { title: "QA" };
 export const dynamic = "force-dynamic";
 
 export default async function ReviewPage() {
-  const { locale, t } = await sessionT();
+  const { locale, t } = await adminT();
   const today = todayISO();
   const [queue, recent] = await Promise.all([getReviewQueue(), getRecentlyReviewed(20)]);
   const signed = await signPaths(collectPaths(queue));

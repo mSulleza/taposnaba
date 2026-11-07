@@ -1231,6 +1231,28 @@ async function main() {
 
   await as(admin.id);
 
+  // ---- logged-out callers (the publishable key, no session) reach nothing
+  console.log("→ logged-out callers are refused");
+  await as(null, "anon");
+  await db.exec("set role anon");
+  for (const fn of ["helper_balance", "helper_earned_total", "helper_payouts_committed", "earnings_outlook"]) {
+    await assert.rejects(
+      q(`select public.${fn}($1)`, [helper.id]),
+      /permission denied/,
+      `anon cannot call ${fn}`
+    );
+  }
+  await assert.rejects(q("select public.sole_helper()"), /permission denied/, "anon cannot ask for the helper's id");
+  await resetRole();
+  // Even with EXECUTE, a missing session must not pass the wallet guard.
+  await as(null);
+  await assert.rejects(
+    q("select public.helper_balance($1)", [helper.id]),
+    /not allowed to read this wallet/,
+    "no session, no wallet"
+  );
+  await as(admin.id);
+
   console.log("\n✔ all database checks passed");
   await db.close();
 }

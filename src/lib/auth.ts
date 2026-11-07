@@ -70,3 +70,12 @@ export async function sessionT() {
   const s = await requireSession();
   return { ...s, t: getT(s.locale) };
 }
+
+/**
+ * Same as sessionT, for admin pages. The admin layout checks the role too, but a
+ * page can render without its layout re-running, so each admin page checks it.
+ */
+export async function adminT() {
+  const s = await requireAdmin();
+  return { ...s, t: getT(s.locale) };
+}
