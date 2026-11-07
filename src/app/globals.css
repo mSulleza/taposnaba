@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #fff8ed;
+  --color-brand-100: #ffefd3;
+  --color-brand-200: #ffdba6;
+  --color-brand-300: #ffc06e;
+  --color-brand-400: #ff9b34;
+  --color-brand-500: #fb7d0d;
+  --color-brand-600: #ec6203;
+  --color-brand-700: #c34806;
+  --color-brand-800: #9b390d;
+  --color-brand-900: #7d300e;
+
+  --color-surface: #fffdfa;
+  --color-surface-2: #f6f1ea;
+  --color-ink: #1f1a17;
+  --color-muted: #6f655e;
+  --color-line: #e8e0d6;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-xl2: 1.25rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* Safe-area helpers for iOS home-screen apps */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Native dialog polish */
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}

@@ -1,0 +1,14 @@
+# Dev/test tooling and DB assets — not needed by the deployed app.
+# NOTE: leading slashes are required. A bare "supabase/" would also match
+# src/lib/supabase/ and break the build.
+/scripts/
+/supabase/
+/docs/
+/.remember/
+
+# Build output and dependencies. Vercel installs from package-lock.json and
+# builds from source, so uploading these only slows the deploy — and the local
+# .next cache grows into the hundreds of MB, which stalls the upload before the
+# build ever starts.
+/.next/
+/node_modules/
